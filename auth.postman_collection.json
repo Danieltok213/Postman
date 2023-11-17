@@ -1,0 +1,3684 @@
+{
+	"info": {
+		"_postman_id": "81ca2a2a-300f-4c68-b86c-5d5097ad201d",
+		"name": "auth",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "28413498"
+	},
+	"item": [
+		{
+			"name": "user auth (200ok)",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"// Записываем полученный токен ответа в переменную token\r",
+							"const responseJson = pm.response.json();\r",
+							"if (responseJson.token) {\r",
+							"    pm.environment.set(\"token\", responseJson.token);\r",
+							"}\r",
+							"// Проверка статус кода ответа\r",
+							"pm.test(\"Статус код ответа 200\", function () {\r",
+							"    pm.response.to.have.status(200);\r",
+							"});\r",
+							"\r",
+							"// Парсим JSON-ответ\r",
+							"var jsonData = pm.response.json();\r",
+							"// Проверяем наличие полей\r",
+							"pm.test(\"Проверка наличия поля 'id'\", function () {\r",
+							"    pm.expect(jsonData).to.have.property('id');\r",
+							"});\r",
+							"pm.test(\"Проверка наличия поля 'login'\", function () {\r",
+							"    pm.expect(jsonData).to.have.property('login');\r",
+							"});\r",
+							"pm.test(\"Проверка наличия поля 'token'\", function () {\r",
+							"    pm.expect(jsonData).to.have.property('token');\r",
+							"});\r",
+							"pm.test(\"Проверка наличия поля 'role'\", function () {\r",
+							"    pm.expect(jsonData).to.have.property('role');\r",
+							"});\r",
+							"pm.test(\"Проверка наличия поля 'ts'\", function () {\r",
+							"    pm.expect(jsonData).to.have.property('ts');\r",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "AVVmVAcgTvNcTPYFSMusKYkyRZYuowUayEocPCJoBqnWwcIPebAeZalwADrPcYYVLNSemXhdsLOzDXOeeInGFEyCViuXjErEtwUaSfYIcuiKUbKKCOobGdMXaVykEBbxLYRnovFnpWcOckVyhpiuTRvSjUwIoIrPgjADLhwGaFTvpZrvtLeGfftnJIhBizUColvelLaMqdeXccSQqNSxCfJejVnrKJHBCKhbjSvdXVzuKtqGgzERaLpEOCNQQcWt",
+						"type": "text",
+						"disabled": true
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n  \"login\": \"1234\",\r\n  \"password\": \"1234\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/auth",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"auth"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "user auth (invalid login 400)",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"// Проверка статус кода ответа\r",
+							"pm.test(\"Статус код ответа 400\", function () {\r",
+							"    pm.response.to.have.status(400);\r",
+							"});\r",
+							"// Парсим JSON-ответ\r",
+							"var jsonData = pm.response.json();\r",
+							"// Проверяем, что значение равно null\r",
+							"pm.test(\"Проверка, что значение равно null\", function () {\r",
+							"    pm.expect(jsonData).to.eql(null);\r",
+							"});\r",
+							"\r",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "{{token}}",
+						"type": "text",
+						"disabled": true
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n  \"login\": \"logi\",\r\n  \"password\": \"1234\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/auth",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"auth"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "user auth (invalid password 400)",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"// Проверка статус кода ответа\r",
+							"pm.test(\"Статус код ответа 400\", function () {\r",
+							"    pm.response.to.have.status(400);\r",
+							"});\r",
+							"// Парсим JSON-ответ\r",
+							"var jsonData = pm.response.json();\r",
+							"// Проверяем, что значение равно null\r",
+							"pm.test(\"Проверка, что значение равно null\", function () {\r",
+							"    pm.expect(jsonData).to.eql(null);\r",
+							"});\r",
+							"\r",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "{{token}}",
+						"type": "text",
+						"disabled": true
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n  \"login\": \"login\",\r\n  \"password\": \"234\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/auth",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"auth"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "user auth (invalid request 404)",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"// Проверка статус кода ответа\r",
+							"pm.test(\"Статус код ответа 404\", function () {\r",
+							"    pm.response.to.have.status(404);\r",
+							"});\r",
+							"// Получаем тело ответа\r",
+							"var responseBody = pm.response.text();\r",
+							"\r",
+							"// Проверяем, что тело ответа содержит \"Not found\"\r",
+							"pm.test(\"Проверка, что тело ответа содержит 'Not found'\", function () {\r",
+							"    pm.expect(responseBody).to.include(\"Not found\");\r",
+							"});\r",
+							"\r",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n  \"login\": \"login\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/aut",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"aut"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "user auth (server error 500)",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"// Проверка статус кода ответа\r",
+							"pm.test(\"Статус код ответа 500\", function () {\r",
+							"    pm.response.to.have.status(500);\r",
+							"});\r",
+							"// Получаем тело ответа\r",
+							"var responseBody = pm.response.text();\r",
+							"// Проверяем, что тело ответа пустое\r",
+							"pm.test(\"Проверка, что тело ответа пустое\", function () {\r",
+							"    pm.expect(responseBody).to.be.empty;\r",
+							"});\r",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n  \"login\": \"login\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/auth",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"auth"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "book entry (auth 200ok)",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Статус код ответа 200\", function () {\r",
+							"    pm.response.to.have.status(200);\r",
+							"});\r",
+							"// Парсим JSON-ответ\r",
+							"var jsonData = pm.response.json();\r",
+							"// Проверяем наличие поля 'id' и что оно не равно null\r",
+							"pm.test(\"Проверка наличия и значения поля 'id' \", function () {\r",
+							"    pm.expect(jsonData).to.have.property('id').and.not.eql(null);\r",
+							"});\r",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "noauth"
+				},
+				"method": "POST",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "{{token}}",
+						"type": "text"
+					},
+					{
+						"key": "",
+						"value": "",
+						"type": "text",
+						"disabled": true
+					},
+					{
+						"key": "",
+						"value": "",
+						"type": "text",
+						"disabled": true
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": " {\r\n        \"id\": \"5\",\r\n        \"metabook\": 1,\r\n        \"language\": 1,\r\n        \"title\": \"Вечные мгновения\",\r\n        \"author\": \"1\",\r\n        \"translation_date\": 1954,\r\n        \"translator\": 2,\r\n        \"is_ready\": true,\r\n        \"is_visible\": true,\r\n        \"owner\": 1\r\n    }",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/admin/insertBook",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"admin",
+						"insertBook"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "book entry (not token auth 500)",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Статус код ответа 500\", function () {\r",
+							"    pm.response.to.have.status(500);\r",
+							"});\r",
+							"// Получаем тело ответа\r",
+							"var responseBody = pm.response.text();\r",
+							"// Проверяем, что тело ответа пустое\r",
+							"pm.test(\"Проверка, что тело ответа пустое\", function () {\r",
+							"    pm.expect(responseBody).to.be.empty;\r",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "noauth"
+				},
+				"method": "POST",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "{{token}}",
+						"type": "text",
+						"disabled": true
+					},
+					{
+						"key": "",
+						"value": "",
+						"type": "text",
+						"disabled": true
+					},
+					{
+						"key": "",
+						"value": "",
+						"type": "text",
+						"disabled": true
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": " {\r\n        \"id\": \"1\",\r\n        \"metabook\": 1,\r\n        \"language\": 1,\r\n        \"title\": \"Вечные мгновения\",\r\n        \"author\": \"1\",\r\n        \"translation_date\": 1954,\r\n        \"translator\": 2,\r\n        \"is_ready\": true,\r\n        \"is_visible\": true,\r\n        \"owner\": 1\r\n    }",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/admin/insertBook",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"admin",
+						"insertBook"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "book entry (invalid token auth 400)",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Статус код ответа 400\", function () {\r",
+							"    pm.response.to.have.status(400);\r",
+							"});\r",
+							"// Парсим тело ответа как строку\r",
+							"var responseBody = pm.response.text();\r",
+							"// Проверяем, содержит ли тело ответа \"invalid authorization token\"\r",
+							"pm.test(\"Проверка наличия фразы 'invalid authorization token' в теле ответа\", function () {\r",
+							"    pm.expect(responseBody).to.include(\"invalid authorization token\");\r",
+							"});\r",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "noauth"
+				},
+				"method": "POST",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "xfvdvosdrijvsodmfjvnsiu",
+						"type": "text"
+					},
+					{
+						"key": "",
+						"value": "",
+						"type": "text",
+						"disabled": true
+					},
+					{
+						"key": "",
+						"value": "",
+						"type": "text",
+						"disabled": true
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": " {\r\n        \"id\": \"1\",\r\n        \"metabook\": 1,\r\n        \"language\": 1,\r\n        \"title\": \"Вечные мгновения\",\r\n        \"author\": \"1\",\r\n        \"translation_date\": 1954,\r\n        \"translator\": 2,\r\n        \"is_ready\": true,\r\n        \"is_visible\": true,\r\n        \"owner\": 1\r\n    }",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/admin/insertBook",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"admin",
+						"insertBook"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "book entry (invalid reguest 404)",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"// Проверка статус кода ответа\r",
+							"pm.test(\"Статус код ответа 404\", function () {\r",
+							"    pm.response.to.have.status(404);\r",
+							"});\r",
+							"// Получаем тело ответа\r",
+							"var responseBody = pm.response.text();\r",
+							"\r",
+							"// Проверяем, что тело ответа содержит \"Not found\"\r",
+							"pm.test(\"Проверка, что тело ответа содержит 'Not found'\", function () {\r",
+							"    pm.expect(responseBody).to.include(\"Not found\");\r",
+							"});\r",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "noauth"
+				},
+				"method": "POST",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "{{token}}",
+						"type": "text"
+					},
+					{
+						"key": "",
+						"value": "",
+						"type": "text",
+						"disabled": true
+					},
+					{
+						"key": "",
+						"value": "",
+						"type": "text",
+						"disabled": true
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": " {\r\n        \"id\": \"1\",\r\n        \"metabook\": 1,\r\n        \"language\": 1,\r\n        \"title\": \"Вечные мгновения\",\r\n        \"author\": \"1\",\r\n        \"translation_date\": 1954,\r\n        \"translator\": 2,\r\n        \"is_ready\": true,\r\n        \"is_visible\": true,\r\n        \"owner\": 1\r\n    }",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/admin/insertBok",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"admin",
+						"insertBok"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "book entry (invalid  data 500)",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"// Проверка статус кода ответа\r",
+							"pm.test(\"Статус код ответа 500\", function () {\r",
+							"    pm.response.to.have.status(500);\r",
+							"});\r",
+							"// Получаем тело ответа\r",
+							"var responseBody = pm.response.text();\r",
+							"// Проверяем, что тело ответа пустое\r",
+							"pm.test(\"Проверка, что тело ответа пустое\", function () {\r",
+							"    pm.expect(responseBody).to.be.empty;\r",
+							"});\r",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "noauth"
+				},
+				"method": "POST",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "{{token}}",
+						"type": "text"
+					},
+					{
+						"key": "",
+						"value": "",
+						"type": "text",
+						"disabled": true
+					},
+					{
+						"key": "",
+						"value": "",
+						"type": "text",
+						"disabled": true
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": " {\r\n        \"metabook\": 1,\r\n        \"language\": 1,\r\n        \"title\": \"Вечные мгновения\",\r\n        \"author\": \"1\",\r\n        \"translation_date\": 1954,\r\n        \"translator\": 2,\r\n        \"is_ready\": true,\r\n        \"is_visible\": true,\r\n        \"owner\": 1\r\n    }",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/admin/insertBook",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"admin",
+						"insertBook"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "chapters  entry (200ok)",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Статус код ответа 200\", function () {\r",
+							"    pm.response.to.have.status(200);\r",
+							"});\r",
+							"// Парсим JSON-ответ\r",
+							"var jsonData = pm.response.json();\r",
+							"// Проверяем наличие поля 'id' и что оно не равно null\r",
+							"pm.test(\"Проверка наличия и значения поля 'id' \", function () {\r",
+							"    pm.expect(jsonData).to.have.property('id').and.not.eql(null);\r",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "noauth"
+				},
+				"method": "POST",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "{{token}}",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"id\": 3,\r\n    \"book\": 2,\r\n    \"title\": \"Глава 1\",\r\n    \"txt\": \"Тест-тест-тест\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/admin/insertChapter",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"admin",
+						"insertChapter"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "chapters  entry (no token auth 500)",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Статус код ответа 500\", function () {\r",
+							"    pm.response.to.have.status(500);\r",
+							"});\r",
+							"// Получаем тело ответа\r",
+							"var responseBody = pm.response.text();\r",
+							"// Проверяем, что тело ответа пустое\r",
+							"pm.test(\"Проверка, что тело ответа пустое\", function () {\r",
+							"    pm.expect(responseBody).to.be.empty;\r",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "noauth"
+				},
+				"method": "POST",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "{{token}}",
+						"type": "text",
+						"disabled": true
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"id\": \"8\",\r\n    \"book\": \"2\",\r\n    \"title\": \"sdcsdc\",\r\n    \"txt\": \"ыавиваывам\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/admin/insertChapter",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"admin",
+						"insertChapter"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "chapters  entry (invalid token ayth 400)",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Статус код ответа 400\", function () {\r",
+							"    pm.response.to.have.status(400);\r",
+							"});\r",
+							"// Парсим тело ответа как строку\r",
+							"var responseBody = pm.response.text();\r",
+							"// Проверяем, содержит ли тело ответа \"invalid authorization token\"\r",
+							"pm.test(\"Проверка наличия фразы 'invalid authorization token' в теле ответа\", function () {\r",
+							"    pm.expect(responseBody).to.include(\"invalid authorization token\");\r",
+							"});\r",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "noauth"
+				},
+				"method": "POST",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "sdsdvdfsvjvaildfvhdljfnvdckj",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"id\": \"8\",\r\n    \"book\": \"2\",\r\n    \"title\": \"sdcsdc\",\r\n    \"txt\": \"ыавиваывам\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/admin/insertChapter",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"admin",
+						"insertChapter"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "chapters  entry (invalid request 404)",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"// Проверка статус кода ответа\r",
+							"pm.test(\"Статус код ответа 404\", function () {\r",
+							"    pm.response.to.have.status(404);\r",
+							"});\r",
+							"// Получаем тело ответа\r",
+							"var responseBody = pm.response.text();\r",
+							"\r",
+							"// Проверяем, что тело ответа содержит \"Not found\"\r",
+							"pm.test(\"Проверка, что тело ответа содержит 'Not found'\", function () {\r",
+							"    pm.expect(responseBody).to.include(\"Not found\");\r",
+							"});\r",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "noauth"
+				},
+				"method": "POST",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "{{token}}",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"id\": \"8\",\r\n    \"book\": \"2\",\r\n    \"title\": \"sdcsdc\",\r\n    \"txt\": \"ыавиваывам\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/admin/insertChapt",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"admin",
+						"insertChapt"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "chapters  entry (invalid data 500)",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"// Проверка статус кода ответа\r",
+							"pm.test(\"Статус код ответа 500\", function () {\r",
+							"    pm.response.to.have.status(500);\r",
+							"});\r",
+							"// Получаем тело ответа\r",
+							"var responseBody = pm.response.text();\r",
+							"// Проверяем, что тело ответа пустое\r",
+							"pm.test(\"Проверка, что тело ответа пустое\", function () {\r",
+							"    pm.expect(responseBody).to.be.empty;\r",
+							"});\r",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "noauth"
+				},
+				"method": "POST",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "{{token}}",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n\r\n    \"book\": \"2\",\r\n    \"title\": \"sdcsdc\",\r\n    \"txt\": \"ыавиваывам\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/admin/insertChapter",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"admin",
+						"insertChapter"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "creator entry (200ok)",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Статус код ответа 200\", function () {\r",
+							"    pm.response.to.have.status(200);\r",
+							"});\r",
+							"// Парсим JSON-ответ\r",
+							"var jsonData = pm.response.json();\r",
+							"// Проверяем наличие поля 'id' и что оно не равно null\r",
+							"pm.test(\"Проверка наличия и значения поля 'id' \", function () {\r",
+							"    pm.expect(jsonData).to.have.property('id').and.not.eql(null);\r",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "noauth"
+				},
+				"method": "POST",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "{{token}}",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n  \"id\": \"4\",\r\n  \"english_name\": \"Author Name\",\r\n  \"russian_name\": \"Имя автора\",\r\n  \"german_name\": \"Name des Autors\",\r\n  \"original_language\": 1,\r\n  \"birth_date\": 1980,\r\n  \"is_author\": true,\r\n  \"is_translator\": false,\r\n  \"owner\": 1\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/admin/insertCreator",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"admin",
+						"insertCreator"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "creator entry (no token auth 500)",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Статус код ответа 500\", function () {\r",
+							"    pm.response.to.have.status(500);\r",
+							"});\r",
+							"// Получаем тело ответа\r",
+							"var responseBody = pm.response.text();\r",
+							"// Проверяем, что тело ответа пустое\r",
+							"pm.test(\"Проверка, что тело ответа пустое\", function () {\r",
+							"    pm.expect(responseBody).to.be.empty;\r",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "noauth"
+				},
+				"method": "POST",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "{{token}}",
+						"type": "text",
+						"disabled": true
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n  \"id\": \"4\",\r\n  \"english_name\": \"Author Name\",\r\n  \"russian_name\": \"Имя автора\",\r\n  \"german_name\": \"Name des Autors\",\r\n  \"original_language\": 1,\r\n  \"birth_date\": 1980,\r\n  \"is_author\": true,\r\n  \"is_translator\": false,\r\n  \"owner\": 1\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/admin/insertCreator",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"admin",
+						"insertCreator"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "creator entry (invalid token auth 400)",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Статус код ответа 400\", function () {\r",
+							"    pm.response.to.have.status(400);\r",
+							"});\r",
+							"// Парсим тело ответа как строку\r",
+							"var responseBody = pm.response.text();\r",
+							"// Проверяем, содержит ли тело ответа \"invalid authorization token\"\r",
+							"pm.test(\"Проверка наличия фразы 'invalid authorization token' в теле ответа\", function () {\r",
+							"    pm.expect(responseBody).to.include(\"invalid authorization token\");\r",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "noauth"
+				},
+				"method": "POST",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "sdkfvndfjvnsidfdfsvasdfv",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n  \"id\": \"4\",\r\n  \"english_name\": \"Author Name\",\r\n  \"russian_name\": \"Имя автора\",\r\n  \"german_name\": \"Name des Autors\",\r\n  \"original_language\": 1,\r\n  \"birth_date\": 1980,\r\n  \"is_author\": true,\r\n  \"is_translator\": false,\r\n  \"owner\": 1\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/admin/insertCreator",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"admin",
+						"insertCreator"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "creator entry (invalid request 404)",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"// Проверка статус кода ответа\r",
+							"pm.test(\"Статус код ответа 404\", function () {\r",
+							"    pm.response.to.have.status(404);\r",
+							"});\r",
+							"// Получаем тело ответа\r",
+							"var responseBody = pm.response.text();\r",
+							"\r",
+							"// Проверяем, что тело ответа содержит \"Not found\"\r",
+							"pm.test(\"Проверка, что тело ответа содержит 'Not found'\", function () {\r",
+							"    pm.expect(responseBody).to.include(\"Not found\");\r",
+							"});\r",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "noauth"
+				},
+				"method": "POST",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "sdkfvndfjvnsidfdfsvasdfv",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n  \"id\": \"4\",\r\n  \"english_name\": \"Author Name\",\r\n  \"russian_name\": \"Имя автора\",\r\n  \"german_name\": \"Name des Autors\",\r\n  \"original_language\": 1,\r\n  \"birth_date\": 1980,\r\n  \"is_author\": true,\r\n  \"is_translator\": false,\r\n  \"owner\": 1\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/admin/insertCreat",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"admin",
+						"insertCreat"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "creator entry (invalid data 500)",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"// Проверка статус кода ответа\r",
+							"pm.test(\"Статус код ответа 500\", function () {\r",
+							"    pm.response.to.have.status(500);\r",
+							"});\r",
+							"// Получаем тело ответа\r",
+							"var responseBody = pm.response.text();\r",
+							"// Проверяем, что тело ответа пустое\r",
+							"pm.test(\"Проверка, что тело ответа пустое\", function () {\r",
+							"    pm.expect(responseBody).to.be.empty;\r",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "noauth"
+				},
+				"method": "POST",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "{{token}}",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n  \"english_name\": \"Author Name\",\r\n  \"russian_name\": \"Имя автора\",\r\n  \"german_name\": \"Name des Autors\",\r\n  \"original_language\": 1,\r\n  \"birth_date\": 1980,\r\n  \"is_author\": true,\r\n  \"is_translator\": false,\r\n  \"owner\": 1\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/admin/insertCreator",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"admin",
+						"insertCreator"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "metabook entry (200ok)",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Статус код ответа 200\", function () {\r",
+							"    pm.response.to.have.status(200);\r",
+							"});\r",
+							"// Парсим JSON-ответ\r",
+							"var jsonData = pm.response.json();\r",
+							"// Проверяем наличие поля 'id' и что оно не равно null\r",
+							"pm.test(\"Проверка наличия и значения поля 'id' \", function () {\r",
+							"    pm.expect(jsonData).to.have.property('id').and.not.eql(null);\r",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "noauth"
+				},
+				"method": "POST",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "{{token}}",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n  \"id\": \"5\",\r\n  \"author\": \"1\",\r\n  \"language\": \"1\",\r\n  \"title\": \"Meta Book Title\",\r\n  \"create_date\": \"2000\",\r\n  \"size\": \"500\",\r\n  \"owner\": \"1\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/admin/insertMetabook",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"admin",
+						"insertMetabook"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "metabook entry (no token auth 500)",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Статус код ответа 500\", function () {\r",
+							"    pm.response.to.have.status(500);\r",
+							"});\r",
+							"// Получаем тело ответа\r",
+							"var responseBody = pm.response.text();\r",
+							"// Проверяем, что тело ответа пустое\r",
+							"pm.test(\"Проверка, что тело ответа пустое\", function () {\r",
+							"    pm.expect(responseBody).to.be.empty;\r",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "noauth"
+				},
+				"method": "POST",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "{{token}}",
+						"type": "text",
+						"disabled": true
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n  \"id\": \"1\",\r\n  \"author\": \"1\",\r\n  \"language\": \"1\",\r\n  \"title\": \"Meta Book Title\",\r\n  \"create_date\": \"2000\",\r\n  \"size\": \"500\",\r\n  \"owner\": \"1\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/admin/insertMetabook",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"admin",
+						"insertMetabook"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "metabook entry (invalid token 400)",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Статус код ответа 400\", function () {\r",
+							"    pm.response.to.have.status(400);\r",
+							"});\r",
+							"// Парсим тело ответа как строку\r",
+							"var responseBody = pm.response.text();\r",
+							"// Проверяем, содержит ли тело ответа \"invalid authorization token\"\r",
+							"pm.test(\"Проверка наличия фразы 'invalid authorization token' в теле ответа\", function () {\r",
+							"    pm.expect(responseBody).to.include(\"invalid authorization token\");\r",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "noauth"
+				},
+				"method": "POST",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "dvfdsfvdfsjvkjsdfnvjnkkafjnv",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n  \"id\": \"1\",\r\n  \"author\": \"1\",\r\n  \"language\": \"1\",\r\n  \"title\": \"Meta Book Title\",\r\n  \"create_date\": \"2000\",\r\n  \"size\": \"500\",\r\n  \"owner\": \"1\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/admin/insertMetabook",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"admin",
+						"insertMetabook"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "metabook entry (invalid request 404)",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"// Проверка статус кода ответа\r",
+							"pm.test(\"Статус код ответа 404\", function () {\r",
+							"    pm.response.to.have.status(404);\r",
+							"});\r",
+							"// Получаем тело ответа\r",
+							"var responseBody = pm.response.text();\r",
+							"\r",
+							"// Проверяем, что тело ответа содержит \"Not found\"\r",
+							"pm.test(\"Проверка, что тело ответа содержит 'Not found'\", function () {\r",
+							"    pm.expect(responseBody).to.include(\"Not found\");\r",
+							"});\r",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "noauth"
+				},
+				"method": "POST",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "{{token}}",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n  \"id\": \"1\",\r\n  \"author\": \"1\",\r\n  \"language\": \"1\",\r\n  \"title\": \"Meta Book Title\",\r\n  \"create_date\": \"2000\",\r\n  \"size\": \"500\",\r\n  \"owner\": \"1\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/admin/insertMetabok",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"admin",
+						"insertMetabok"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "metabook entry (invalid data 500)",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"// Проверка статус кода ответа\r",
+							"pm.test(\"Статус код ответа 500\", function () {\r",
+							"    pm.response.to.have.status(500);\r",
+							"});\r",
+							"// Получаем тело ответа\r",
+							"var responseBody = pm.response.text();\r",
+							"// Проверяем, что тело ответа пустое\r",
+							"pm.test(\"Проверка, что тело ответа пустое\", function () {\r",
+							"    pm.expect(responseBody).to.be.empty;\r",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "noauth"
+				},
+				"method": "POST",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "{{token}}",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n  \"author\": \"1\",\r\n  \"language\": \"1\",\r\n  \"title\": \"Meta Book Title\",\r\n  \"create_date\": \"2000\",\r\n  \"size\": \"500\",\r\n  \"owner\": \"1\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/admin/insertMetabook",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"admin",
+						"insertMetabook"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "notes entry (200ok)",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Статус код ответа 200\", function () {\r",
+							"    pm.response.to.have.status(200);\r",
+							"});\r",
+							"// Парсим JSON-ответ\r",
+							"var jsonData = pm.response.json();\r",
+							"// Проверяем наличие поля 'id' и что оно не равно null\r",
+							"pm.test(\"Проверка наличия и значения поля 'id' \", function () {\r",
+							"    pm.expect(jsonData).to.have.property('id').and.not.eql(null);\r",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "noauth"
+				},
+				"method": "POST",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "{{token}}",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "[\r\n  {\r\n    \"id\": \"5\",\r\n    \"book\": 5,\r\n    \"chapter\": 1,\r\n    \"txt\": \"заметки\"\r\n  },\r\n    {\r\n    \"id\": \"6\",\r\n    \"book\": 5,\r\n    \"chapter\": 1,\r\n    \"txt\": \"заметки\"\r\n  }\r\n]",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/admin/insertNotes",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"admin",
+						"insertNotes"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "notes entry (no token auth 500)",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Статус код ответа 500\", function () {\r",
+							"    pm.response.to.have.status(500);\r",
+							"});\r",
+							"// Получаем тело ответа\r",
+							"var responseBody = pm.response.text();\r",
+							"// Проверяем, что тело ответа пустое\r",
+							"pm.test(\"Проверка, что тело ответа пустое\", function () {\r",
+							"    pm.expect(responseBody).to.be.empty;\r",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "noauth"
+				},
+				"method": "POST",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "{{token}}",
+						"type": "text",
+						"disabled": true
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "[\r\n  {\r\n    \"id\": \"8\",\r\n    \"book\": 2,\r\n    \"chapter\": 1,\r\n    \"txt\": \"заметки\"\r\n  },\r\n    {\r\n    \"id\": \"9\",\r\n    \"book\": 2,\r\n    \"chapter\": 1,\r\n    \"txt\": \"заметки\"\r\n  }\r\n]",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/admin/insertNotes",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"admin",
+						"insertNotes"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "notes entry (invalid token 400)",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Статус код ответа 400\", function () {\r",
+							"    pm.response.to.have.status(400);\r",
+							"});\r",
+							"// Парсим тело ответа как строку\r",
+							"var responseBody = pm.response.text();\r",
+							"// Проверяем, содержит ли тело ответа \"invalid authorization token\"\r",
+							"pm.test(\"Проверка наличия фразы 'invalid authorization token' в теле ответа\", function () {\r",
+							"    pm.expect(responseBody).to.include(\"invalid authorization token\");\r",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "noauth"
+				},
+				"method": "POST",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "sfvwervfwefvwrvwr",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "[\r\n  {\r\n    \"id\": \"8\",\r\n    \"book\": 2,\r\n    \"chapter\": 1,\r\n    \"txt\": \"заметки\"\r\n  },\r\n    {\r\n    \"id\": \"9\",\r\n    \"book\": 2,\r\n    \"chapter\": 1,\r\n    \"txt\": \"заметки\"\r\n  }\r\n]",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/admin/insertNotes",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"admin",
+						"insertNotes"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "notes entry (invalid request 404)",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"// Проверка статус кода ответа\r",
+							"pm.test(\"Статус код ответа 404\", function () {\r",
+							"    pm.response.to.have.status(404);\r",
+							"});\r",
+							"// Получаем тело ответа\r",
+							"var responseBody = pm.response.text();\r",
+							"\r",
+							"// Проверяем, что тело ответа содержит \"Not found\"\r",
+							"pm.test(\"Проверка, что тело ответа содержит 'Not found'\", function () {\r",
+							"    pm.expect(responseBody).to.include(\"Not found\");\r",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "noauth"
+				},
+				"method": "POST",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "{{token}}",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "[\r\n  {\r\n    \"id\": \"8\",\r\n    \"book\": 2,\r\n    \"chapter\": 1,\r\n    \"txt\": \"заметки\"\r\n  },\r\n    {\r\n    \"id\": \"9\",\r\n    \"book\": 2,\r\n    \"chapter\": 1,\r\n    \"txt\": \"заметки\"\r\n  }\r\n]",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/admin/insertNote",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"admin",
+						"insertNote"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "notes entry (invalid data 500)",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"// Проверка статус кода ответа\r",
+							"pm.test(\"Статус код ответа 500\", function () {\r",
+							"    pm.response.to.have.status(500);\r",
+							"});\r",
+							"// Получаем тело ответа\r",
+							"var responseBody = pm.response.text();\r",
+							"// Проверяем, что тело ответа пустое\r",
+							"pm.test(\"Проверка, что тело ответа пустое\", function () {\r",
+							"    pm.expect(responseBody).to.be.empty;\r",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "noauth"
+				},
+				"method": "POST",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "{{token}}",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "\r\n  {\r\n    \"id\": \"8\",\r\n    \"book\": 2,\r\n    \"chapter\": 1,\r\n    \"txt\": \"заметки\"\r\n  }\r\n",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/admin/insertNotes",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"admin",
+						"insertNotes"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "uploads  entry (200ok)",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Статус код ответа 200\", function () {\r",
+							"    pm.response.to.have.status(200);\r",
+							"});\r",
+							"// Парсим JSON-ответ\r",
+							"var jsonData = pm.response.json();\r",
+							"// Проверяем наличие поля 'id' и что оно не равно null\r",
+							"pm.test(\"Проверка наличия и значения поля 'id' \", function () {\r",
+							"    pm.expect(jsonData).to.have.property('id').and.not.eql(null);\r",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "noauth"
+				},
+				"method": "POST",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "{{token}}",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n  \"id\": \"4\",\r\n  \"book\": \"4\",\r\n  \"txt\": \"книга 4\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/admin/raw",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"admin",
+						"raw"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "uploads  entry (no token auth 500)",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Статус код ответа 500\", function () {\r",
+							"    pm.response.to.have.status(500);\r",
+							"});\r",
+							"// Получаем тело ответа\r",
+							"var responseBody = pm.response.text();\r",
+							"// Проверяем, что тело ответа пустое\r",
+							"pm.test(\"Проверка, что тело ответа пустое\", function () {\r",
+							"    pm.expect(responseBody).to.be.empty;\r",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "noauth"
+				},
+				"method": "POST",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "{{token}}",
+						"type": "text",
+						"disabled": true
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n  \"id\": \"4\",\r\n  \"book\": \"4\",\r\n  \"txt\": \"книга 4\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/admin/raw",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"admin",
+						"raw"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "uploads  entry (invalid token 400)",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Статус код ответа 400\", function () {\r",
+							"    pm.response.to.have.status(400);\r",
+							"});\r",
+							"// Парсим тело ответа как строку\r",
+							"var responseBody = pm.response.text();\r",
+							"// Проверяем, содержит ли тело ответа \"invalid authorization token\"\r",
+							"pm.test(\"Проверка наличия фразы 'invalid authorization token' в теле ответа\", function () {\r",
+							"    pm.expect(responseBody).to.include(\"invalid authorization token\");\r",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "noauth"
+				},
+				"method": "POST",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "advfsdcadscadsc",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n  \"id\": \"4\",\r\n  \"book\": \"4\",\r\n  \"txt\": \"книга 4\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/admin/raw",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"admin",
+						"raw"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "uploads  entry (invalid request 404)",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"// Проверка статус кода ответа\r",
+							"pm.test(\"Статус код ответа 404\", function () {\r",
+							"    pm.response.to.have.status(404);\r",
+							"});\r",
+							"// Получаем тело ответа\r",
+							"var responseBody = pm.response.text();\r",
+							"\r",
+							"// Проверяем, что тело ответа содержит \"Not found\"\r",
+							"pm.test(\"Проверка, что тело ответа содержит 'Not found'\", function () {\r",
+							"    pm.expect(responseBody).to.include(\"Not found\");\r",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "noauth"
+				},
+				"method": "POST",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "{{token}}",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n  \"id\": \"4\",\r\n  \"book\": \"4\",\r\n  \"txt\": \"книга 4\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/admin/row",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"admin",
+						"row"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "uploads  entry (invalid data 500)",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"// Проверка статус кода ответа\r",
+							"pm.test(\"Статус код ответа 500\", function () {\r",
+							"    pm.response.to.have.status(500);\r",
+							"});\r",
+							"// Получаем тело ответа\r",
+							"var responseBody = pm.response.text();\r",
+							"// Проверяем, что тело ответа пустое\r",
+							"pm.test(\"Проверка, что тело ответа пустое\", function () {\r",
+							"    pm.expect(responseBody).to.be.empty;\r",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "noauth"
+				},
+				"method": "POST",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "{{token}}",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n  \"txt\": \"книга 4\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/admin/raw",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"admin",
+						"raw"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "creators entry (200ok)",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Статус код ответа 200\", function () {\r",
+							"    pm.response.to.have.status(200);\r",
+							"});\r",
+							"// Парсим JSON-ответ\r",
+							"var jsonData = pm.response.json();\r",
+							"\r",
+							"// Проверяем наличие поля 'id' в JSON-ответе\r",
+							"pm.test(\"Проверка наличия поля 'id'\", function () {\r",
+							"    pm.expect(jsonData).to.have.property('id');\r",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "noauth"
+				},
+				"method": "DELETE",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "{{token}}",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/admin/deleteCreator/4",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"admin",
+						"deleteCreator",
+						"4"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "creators entry (no token auth 500)",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Статус код ответа 500\", function () {\r",
+							"    pm.response.to.have.status(500);\r",
+							"});\r",
+							"// Получаем тело ответа\r",
+							"var responseBody = pm.response.text();\r",
+							"// Проверяем, что тело ответа пустое\r",
+							"pm.test(\"Проверка, что тело ответа пустое\", function () {\r",
+							"    pm.expect(responseBody).to.be.empty;\r",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "noauth"
+				},
+				"method": "DELETE",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "{{token}}",
+						"type": "text",
+						"disabled": true
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/admin/deleteCreator/6",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"admin",
+						"deleteCreator",
+						"6"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "creators entry (invalid token 400)",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Статус код ответа 400\", function () {\r",
+							"    pm.response.to.have.status(400);\r",
+							"});\r",
+							"// Парсим тело ответа как строку\r",
+							"var responseBody = pm.response.text();\r",
+							"// Проверяем, содержит ли тело ответа \"invalid authorization token\"\r",
+							"pm.test(\"Проверка наличия фразы 'invalid authorization token' в теле ответа\", function () {\r",
+							"    pm.expect(responseBody).to.include(\"invalid authorization token\");\r",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "noauth"
+				},
+				"method": "DELETE",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "dfbsfdvdvsdfbsdb",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/admin/deleteCreator/6",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"admin",
+						"deleteCreator",
+						"6"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "creators entry (invalid request 404)",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"// Проверка статус кода ответа\r",
+							"pm.test(\"Статус код ответа 404\", function () {\r",
+							"    pm.response.to.have.status(404);\r",
+							"});\r",
+							"// Получаем тело ответа\r",
+							"var responseBody = pm.response.text();\r",
+							"\r",
+							"// Проверяем, что тело ответа содержит \"Not found\"\r",
+							"pm.test(\"Проверка, что тело ответа содержит 'Not found'\", function () {\r",
+							"    pm.expect(responseBody).to.include(\"Not found\");\r",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "noauth"
+				},
+				"method": "DELETE",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "{{token}}",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/admin/deleteCreat/6",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"admin",
+						"deleteCreat",
+						"6"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "creators entry (invalid data 500)",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"// Проверка статус кода ответа\r",
+							"pm.test(\"Статус код ответа 500\", function () {\r",
+							"    pm.response.to.have.status(500);\r",
+							"});\r",
+							"// Получаем тело ответа\r",
+							"var responseBody = pm.response.text();\r",
+							"// Проверяем, что тело ответа пустое\r",
+							"pm.test(\"Проверка, что тело ответа пустое\", function () {\r",
+							"    pm.expect(responseBody).to.be.empty;\r",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "noauth"
+				},
+				"method": "DELETE",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "{{token}}",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/admin/deleteCreator/-1",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"admin",
+						"deleteCreator",
+						"-1"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "books entry (200ok)",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Статус код ответа 200\", function () {\r",
+							"    pm.response.to.have.status(200);\r",
+							"});\r",
+							"// Парсим JSON-ответ\r",
+							"var jsonData = pm.response.json();\r",
+							"\r",
+							"// Проверяем наличие поля 'id' в JSON-ответе\r",
+							"pm.test(\"Проверка наличия поля 'id'\", function () {\r",
+							"    pm.expect(jsonData).to.have.property('id');\r",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "noauth"
+				},
+				"method": "DELETE",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "{{token}}",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/admin/deleteBook/5",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"admin",
+						"deleteBook",
+						"5"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "books entry (no token auth 500)",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Статус код ответа 500\", function () {\r",
+							"    pm.response.to.have.status(500);\r",
+							"});\r",
+							"// Получаем тело ответа\r",
+							"var responseBody = pm.response.text();\r",
+							"// Проверяем, что тело ответа пустое\r",
+							"pm.test(\"Проверка, что тело ответа пустое\", function () {\r",
+							"    pm.expect(responseBody).to.be.empty;\r",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "noauth"
+				},
+				"method": "DELETE",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "{{token}}",
+						"type": "text",
+						"disabled": true
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/admin/deleteBook/5",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"admin",
+						"deleteBook",
+						"5"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "books entry (invalid token auth 400)",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Статус код ответа 400\", function () {\r",
+							"    pm.response.to.have.status(400);\r",
+							"});\r",
+							"// Парсим тело ответа как строку\r",
+							"var responseBody = pm.response.text();\r",
+							"// Проверяем, содержит ли тело ответа \"invalid authorization token\"\r",
+							"pm.test(\"Проверка наличия фразы 'invalid authorization token' в теле ответа\", function () {\r",
+							"    pm.expect(responseBody).to.include(\"invalid authorization token\");\r",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "noauth"
+				},
+				"method": "DELETE",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "sdbsfbdfvsdfvsdfvdsf",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/admin/deleteBook/5",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"admin",
+						"deleteBook",
+						"5"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "books entry (invalid  request 404)",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"// Проверка статус кода ответа\r",
+							"pm.test(\"Статус код ответа 404\", function () {\r",
+							"    pm.response.to.have.status(404);\r",
+							"});\r",
+							"// Получаем тело ответа\r",
+							"var responseBody = pm.response.text();\r",
+							"\r",
+							"// Проверяем, что тело ответа содержит \"Not found\"\r",
+							"pm.test(\"Проверка, что тело ответа содержит 'Not found'\", function () {\r",
+							"    pm.expect(responseBody).to.include(\"Not found\");\r",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "noauth"
+				},
+				"method": "DELETE",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "{{token}}",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/admin/deleteBok/5",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"admin",
+						"deleteBok",
+						"5"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "books entry (invalid  data 500)",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"// Проверка статус кода ответа\r",
+							"pm.test(\"Статус код ответа 500\", function () {\r",
+							"    pm.response.to.have.status(500);\r",
+							"});\r",
+							"// Получаем тело ответа\r",
+							"var responseBody = pm.response.text();\r",
+							"// Проверяем, что тело ответа пустое\r",
+							"pm.test(\"Проверка, что тело ответа пустое\", function () {\r",
+							"    pm.expect(responseBody).to.be.empty;\r",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "noauth"
+				},
+				"method": "DELETE",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "{{token}}",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/admin/deleteBook/-1",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"admin",
+						"deleteBook",
+						"-1"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "metabooks entry (200ok)",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Статус код ответа 200\", function () {\r",
+							"    pm.response.to.have.status(200);\r",
+							"});\r",
+							"// Парсим JSON-ответ\r",
+							"var jsonData = pm.response.json();\r",
+							"\r",
+							"// Проверяем наличие поля 'id' в JSON-ответе\r",
+							"pm.test(\"Проверка наличия поля 'id'\", function () {\r",
+							"    pm.expect(jsonData).to.have.property('id');\r",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "noauth"
+				},
+				"method": "DELETE",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "{{token}}",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/admin/deleteMetabook/5",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"admin",
+						"deleteMetabook",
+						"5"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "metabooks entry (no token auth 500)",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Статус код ответа 500\", function () {\r",
+							"    pm.response.to.have.status(500);\r",
+							"});\r",
+							"// Получаем тело ответа\r",
+							"var responseBody = pm.response.text();\r",
+							"// Проверяем, что тело ответа пустое\r",
+							"pm.test(\"Проверка, что тело ответа пустое\", function () {\r",
+							"    pm.expect(responseBody).to.be.empty;\r",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "noauth"
+				},
+				"method": "DELETE",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "{{token}}",
+						"type": "text",
+						"disabled": true
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/admin/deleteMetabook/5",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"admin",
+						"deleteMetabook",
+						"5"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "metabooks entry (invalid token auth 400)",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Статус код ответа 400\", function () {\r",
+							"    pm.response.to.have.status(400);\r",
+							"});\r",
+							"// Парсим тело ответа как строку\r",
+							"var responseBody = pm.response.text();\r",
+							"// Проверяем, содержит ли тело ответа \"invalid authorization token\"\r",
+							"pm.test(\"Проверка наличия фразы 'invalid authorization token' в теле ответа\", function () {\r",
+							"    pm.expect(responseBody).to.include(\"invalid authorization token\");\r",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "noauth"
+				},
+				"method": "DELETE",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "sdfvsdvadvsdfv",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/admin/deleteMetabook/5",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"admin",
+						"deleteMetabook",
+						"5"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "metabooks entry (invalid raquest 404)",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"// Проверка статус кода ответа\r",
+							"pm.test(\"Статус код ответа 404\", function () {\r",
+							"    pm.response.to.have.status(404);\r",
+							"});\r",
+							"// Получаем тело ответа\r",
+							"var responseBody = pm.response.text();\r",
+							"\r",
+							"// Проверяем, что тело ответа содержит \"Not found\"\r",
+							"pm.test(\"Проверка, что тело ответа содержит 'Not found'\", function () {\r",
+							"    pm.expect(responseBody).to.include(\"Not found\");\r",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "noauth"
+				},
+				"method": "DELETE",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "{{token}}",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/admin/deleteMetabok/5",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"admin",
+						"deleteMetabok",
+						"5"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "metabooks entry (invalid data 500)",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"// Проверка статус кода ответа\r",
+							"pm.test(\"Статус код ответа 500\", function () {\r",
+							"    pm.response.to.have.status(500);\r",
+							"});\r",
+							"// Получаем тело ответа\r",
+							"var responseBody = pm.response.text();\r",
+							"// Проверяем, что тело ответа пустое\r",
+							"pm.test(\"Проверка, что тело ответа пустое\", function () {\r",
+							"    pm.expect(responseBody).to.be.empty;\r",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "noauth"
+				},
+				"method": "DELETE",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "{{token}}",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/admin/deleteMetabook/-1",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"admin",
+						"deleteMetabook",
+						"-1"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "list  creators (200ok)",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Статус код ответа 200\", function () {\r",
+							"    pm.response.to.have.status(200);\r",
+							"});\r",
+							"\r",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"auth": {
+					"type": "noauth"
+				},
+				"method": "GET",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "{{token}}",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/admin/creators",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"admin",
+						"creators"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "list  creators (no token auth 500)",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Статус код ответа 500\", function () {\r",
+							"    pm.response.to.have.status(500);\r",
+							"});\r",
+							"// Получаем тело ответа\r",
+							"var responseBody = pm.response.text();\r",
+							"// Проверяем, что тело ответа пустое\r",
+							"pm.test(\"Проверка, что тело ответа пустое\", function () {\r",
+							"    pm.expect(responseBody).to.be.empty;\r",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"auth": {
+					"type": "noauth"
+				},
+				"method": "GET",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "{{token}}",
+						"type": "text",
+						"disabled": true
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/admin/creators",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"admin",
+						"creators"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "list  creators (invalid token auth 400)",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Статус код ответа 400\", function () {\r",
+							"    pm.response.to.have.status(400);\r",
+							"});\r",
+							"// Парсим тело ответа как строку\r",
+							"var responseBody = pm.response.text();\r",
+							"// Проверяем, содержит ли тело ответа \"invalid authorization token\"\r",
+							"pm.test(\"Проверка наличия фразы 'invalid authorization token' в теле ответа\", function () {\r",
+							"    pm.expect(responseBody).to.include(\"invalid authorization token\");\r",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"auth": {
+					"type": "noauth"
+				},
+				"method": "GET",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "hgjkhljhugku",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/admin/creators",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"admin",
+						"creators"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "list  creators (invalid request 404)",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"// Проверка статус кода ответа\r",
+							"pm.test(\"Статус код ответа 404\", function () {\r",
+							"    pm.response.to.have.status(404);\r",
+							"});\r",
+							"// Получаем тело ответа\r",
+							"var responseBody = pm.response.text();\r",
+							"\r",
+							"// Проверяем, что тело ответа содержит \"Not found\"\r",
+							"pm.test(\"Проверка, что тело ответа содержит 'Not found'\", function () {\r",
+							"    pm.expect(responseBody).to.include(\"Not found\");\r",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"auth": {
+					"type": "noauth"
+				},
+				"method": "GET",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "{{token}}",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/admin/creator",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"admin",
+						"creator"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "list  books (200ok)",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Статус код ответа 200\", function () {\r",
+							"    pm.response.to.have.status(200);\r",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"auth": {
+					"type": "noauth"
+				},
+				"method": "GET",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "{{token}}",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/admin/books",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"admin",
+						"books"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "list  books (no token auth 500)",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Статус код ответа 500\", function () {\r",
+							"    pm.response.to.have.status(500);\r",
+							"});\r",
+							"// Получаем тело ответа\r",
+							"var responseBody = pm.response.text();\r",
+							"// Проверяем, что тело ответа пустое\r",
+							"pm.test(\"Проверка, что тело ответа пустое\", function () {\r",
+							"    pm.expect(responseBody).to.be.empty;\r",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"auth": {
+					"type": "noauth"
+				},
+				"method": "GET",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "{{token}}",
+						"type": "text",
+						"disabled": true
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/admin/books",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"admin",
+						"books"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "list  books (invalid token auth 400)",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Статус код ответа 400\", function () {\r",
+							"    pm.response.to.have.status(400);\r",
+							"});\r",
+							"// Парсим тело ответа как строку\r",
+							"var responseBody = pm.response.text();\r",
+							"// Проверяем, содержит ли тело ответа \"invalid authorization token\"\r",
+							"pm.test(\"Проверка наличия фразы 'invalid authorization token' в теле ответа\", function () {\r",
+							"    pm.expect(responseBody).to.include(\"invalid authorization token\");\r",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"auth": {
+					"type": "noauth"
+				},
+				"method": "GET",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "dfsgdfdfbdvsdfv",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/admin/books",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"admin",
+						"books"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "list  books (invalid request 404)",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Статус код ответа 404\", function () {\r",
+							"    pm.response.to.have.status(404);\r",
+							"});\r",
+							"// Получаем тело ответа\r",
+							"var responseBody = pm.response.text();\r",
+							"\r",
+							"// Проверяем, что тело ответа содержит \"Not found\"\r",
+							"pm.test(\"Проверка, что тело ответа содержит 'Not found'\", function () {\r",
+							"    pm.expect(responseBody).to.include(\"Not found\");\r",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"auth": {
+					"type": "noauth"
+				},
+				"method": "GET",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "dfsgdfdfbdvsdfv",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/admin/boks",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"admin",
+						"boks"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "list metabooks (200ok)",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"auth": {
+					"type": "noauth"
+				},
+				"method": "GET",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "{{token}}",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/admin/metabooks",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"admin",
+						"metabooks"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "list metabooks (no token auth 500)",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Статус код ответа 500\", function () {\r",
+							"    pm.response.to.have.status(500);\r",
+							"});\r",
+							"// Получаем тело ответа\r",
+							"var responseBody = pm.response.text();\r",
+							"// Проверяем, что тело ответа пустое\r",
+							"pm.test(\"Проверка, что тело ответа пустое\", function () {\r",
+							"    pm.expect(responseBody).to.be.empty;\r",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"auth": {
+					"type": "noauth"
+				},
+				"method": "GET",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "{{token}}",
+						"type": "text",
+						"disabled": true
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/admin/metabooks",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"admin",
+						"metabooks"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "list metabooks (invalid token auth 400)",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Статус код ответа 400\", function () {\r",
+							"    pm.response.to.have.status(400);\r",
+							"});\r",
+							"// Парсим тело ответа как строку\r",
+							"var responseBody = pm.response.text();\r",
+							"// Проверяем, содержит ли тело ответа \"invalid authorization token\"\r",
+							"pm.test(\"Проверка наличия фразы 'invalid authorization token' в теле ответа\", function () {\r",
+							"    pm.expect(responseBody).to.include(\"invalid authorization token\");\r",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"auth": {
+					"type": "noauth"
+				},
+				"method": "GET",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "asdvasfdvsdvasdv",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/admin/metabooks",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"admin",
+						"metabooks"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "list metabooks (invalid reguest 404)",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"// Проверка статус кода ответа\r",
+							"pm.test(\"Статус код ответа 404\", function () {\r",
+							"    pm.response.to.have.status(404);\r",
+							"});\r",
+							"// Получаем тело ответа\r",
+							"var responseBody = pm.response.text();\r",
+							"\r",
+							"// Проверяем, что тело ответа содержит \"Not found\"\r",
+							"pm.test(\"Проверка, что тело ответа содержит 'Not found'\", function () {\r",
+							"    pm.expect(responseBody).to.include(\"Not found\");\r",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"auth": {
+					"type": "noauth"
+				},
+				"method": "GET",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "{{token}}",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/admin/metaboks",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"admin",
+						"metaboks"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}
